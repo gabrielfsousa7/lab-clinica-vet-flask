@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Início - Clínica Veterinária{% endblock %}
+
+{% block content %}
+  <h1>Painel da Clínica</h1>
+  <p>Olá, {{ current_user.nome }}. Escolha uma opção abaixo:</p>
+  <ul>
+    <li><a href="{{ url_for('controller.listar_pets') }}">Gerenciar Pets</a></li>
+    <li><a href="{{ url_for('controller.listar_agendamentos') }}">Gerenciar Agendamentos</a></li>
+  </ul>
+{% endblock %}

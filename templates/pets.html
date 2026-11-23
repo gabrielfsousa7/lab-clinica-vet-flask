@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Pets{% endblock %}
+
+{% block content %}
+  <h2>Cadastrar Pet</h2>
+  <form method="post" action="{{ url_for('controller.criar_pet') }}">
+    <label>Nome do pet</label>
+    <input type="text" name="nome" required>
+
+    <label>Espécie</label>
+    <input type="text" name="especie" placeholder="Ex: Cachorro, Gato" required>
+
+    <label>Raça</label>
+    <input type="text" name="raca">
+
+    <label>Idade</label>
+    <input type="number" name="idade" min="0" required>
+
+    <label>Tutor</label>
+    <select name="tutor_id" required>
+      <option value="">Selecione...</option>
+      {% for tutor in tutores %}
+        <option value="{{ tutor.id }}">{{ tutor.nome }} ({{ tutor.email }})</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit">Cadastrar Pet</button>
+  </form>
+
+  <h2 style="margin-top: 28px;">Pets cadastrados</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Espécie</th>
+        <th>Raça</th>
+        <th>Idade</th>
+        <th>Tutor</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pet in pets %}
+        <tr>
+          <td>{{ pet.id }}</td>
+          <td>{{ pet.nome }}</td>
+          <td>{{ pet.especie }}</td>
+          <td>{{ pet.raca or '-' }}</td>
+          <td>{{ pet.idade }}</td>
+          <td>{{ pet.tutor.nome }}</td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="6">Nenhum pet cadastrado.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

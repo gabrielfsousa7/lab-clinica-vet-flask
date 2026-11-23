@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Clínica Veterinária{% endblock %}</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f5f5f5; color: #222; }
+    nav { background: #1f4e5f; padding: 12px 20px; display: flex; gap: 16px; align-items: center; }
+    nav a { color: #fff; text-decoration: none; font-size: 14px; }
+    nav a:hover { text-decoration: underline; }
+    .container { max-width: 900px; margin: 24px auto; background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 6px; }
+    .msg { background: #fff3cd; border: 1px solid #ffe69c; padding: 10px; margin-bottom: 16px; border-radius: 4px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; font-size: 14px; }
+    th { background: #eee; }
+    form { display: grid; gap: 10px; max-width: 450px; margin-top: 12px; }
+    input, select, button { padding: 8px; font-size: 14px; }
+    button { background: #1f4e5f; color: #fff; border: none; cursor: pointer; border-radius: 4px; }
+    button:hover { background: #163a47; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="{{ url_for('ctrl_home.index') }}"><strong>Clínica Vet</strong></a>
+    {% if current_user.is_authenticated %}
+      <a href="{{ url_for('controller.listar_pets') }}">Pets</a>
+      <a href="{{ url_for('controller.listar_agendamentos') }}">Agendamentos</a>
+      <a href="{{ url_for('auth.logout') }}">Sair ({{ current_user.username }})</a>
+    {% else %}
+      <a href="{{ url_for('auth.login') }}">Entrar</a>
+    {% endif %}
+  </nav>
+
+  <div class="container">
+    {% for msg in get_flashed_messages() %}
+      <div class="msg">{{ msg }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
